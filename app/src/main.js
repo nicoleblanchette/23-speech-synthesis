@@ -30,8 +30,16 @@ const setOption = e => {
 	toggle();
 };
 
-	speechSynthesis.addEventListener("voiceschanged", populateVoices);
-	voicesDropdown.addEventListener("change", setVoice);
-	options.forEach(option => option.addEventListener("change", setOption));
-	speakButton.addEventListener('click', toggle);
-	stopButton.addEventListener('click', () => toggle(false));
+speechSynthesis.addEventListener("voiceschanged", populateVoices);
+voicesDropdown.addEventListener("change", setVoice);
+options.forEach(option => option.addEventListener("change", setOption));
+speakButton.addEventListener('click', toggle);
+stopButton.addEventListener('click', () => toggle(false));
+
+
+// the event listener doesn't always catch it on page load in some browsers 
+const triggerVoicesChangedEvent = () => {
+  const event = new Event('voiceschanged');
+  speechSynthesis.dispatchEvent(event);
+};
+triggerVoicesChangedEvent();
